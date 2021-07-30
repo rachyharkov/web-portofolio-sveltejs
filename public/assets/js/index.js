@@ -63,6 +63,7 @@ $(document).ready(function () {
   });
   destroySlick();
   initiateSlickforWrapper();
+
 });
 
 
@@ -112,53 +113,6 @@ $(document).ready(function () {
 //     xhttp.send();
 //   }
 // });
-
-
-function initbuttoninfo() {
-  $(".linktoproject").click(function () {
-    console.log("test");
-    $("#contentinfoproject").css("display", "none");
-    var namaproject = $(this).attr("id");
-    $('html,body').animate(
-      {
-        scrollTop: $("#wreper").offset().top,
-      });
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onloadstart = function () {
-      $("#loadingproject").css("display", "unset");
-    };
-
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4) {
-        var content = document.querySelector("#contentinfoproject");
-        if (this.status === 200) {
-          setTimeout(function () {
-            content.innerHTML = xhttp.responseText;
-            $("#loadingproject").css("display", "none");
-            $("#contentinfoproject").css("display", "unset");
-          }, 3000);
-        } else if (this.status == 404) {
-          setTimeout(function () {
-            $("#loadingproject").css("display", "none");
-            $("#contentinfoproject").css("display", "unset");
-          }, 3000);
-          content.innerHTML =
-            "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Informasi Project ini tidak tersedia, mungkin hanya untuk iseng aja</p>";
-        } else {
-          setTimeout(function () {
-            v$("#loadingproject").css("display", "none");
-            $("#contentinfoproject").css("display", "unset");
-          }, 3000);
-          content.innerHTML =
-            "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Gagal memuat info project, Silahkan coba lagi.</p>";
-        }
-      }
-    };
-    xhttp.open("GET", "pages/projectinfo/" + namaproject + ".php", true);
-    xhttp.send();
-  });
-}
 
 function menuToggle() {
   var nav = document.getElementById("nav");
