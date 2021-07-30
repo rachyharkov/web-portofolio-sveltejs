@@ -1,51 +1,98 @@
 <script>
 	import 'lazysizes'
 	import 'lazysizes/plugins/parent-fit/ls.parent-fit'
+	import { onMount } from 'svelte'
 
-	import Landing from './Landing.svelte'
+	import Landing from './pages/Landing.svelte'
+	import Portofolio from './pages/Portofolio.svelte'
+	import Blog from './pages/Blog.svelte'
+
 
 
 	setTimeout(function() {
 		const content = document.getElementById("body-content");
 	    const loadingnya = document.getElementById("loading-ajax");
 	    loadingnya.id = "loading-ajax-end";
-	}, 5000)
+	}, 3000)
+
+	let pageposition = 'landing';
+
+	function loadpagee(e) {
+			console.log(e.detail)
+			load(e.detail)
+	}
+
+	function loadpage(e) {
+		e.preventDefault()
+
+		console.log(e.target.getAttribute('data-text'))
+
+		const whichpage = e.target.getAttribute('data-text')
+
+		if (whichpage === 'nav-desktop' || whichpage === 'aboutme' || whichpage === 'mywork' || whichpage === 'myskill' || whichpage === 'mycertificate' || whichpage === 'endsection') {
+			if (pageposition !== 'landing') {
+				load('landing')
+				pageposition = 'landing'
+				setTimeout(()=> {
+					document.getElementById(whichpage).scrollIntoView()
+				},3000)
+			} else {
+				document.getElementById(whichpage).scrollIntoView()
+			}
+		}
+
+		if (whichpage === 'landing' || whichpage === 'blog') {
+			load(whichpage)
+		}
+	}
+
+	function load(page){
+
+		const laman = page
+
+		var loadingnya = document.getElementById("loading-ajax-end");
+    loadingnya.id = "loading-ajax";
+    
+    setTimeout(() => {
+    	var loadingend = document.getElementById("loading-ajax");
+      loadingend.id = "loading-ajax-end";
+      pageposition = laman;
+      if (laman === 'landing') {
+      	destroySlick();
+      	initiateSlickforWrapper();
+      }
+    }, 3000)
 
 
- //  	function loadPage(page) {
-	//     var xhttp = new XMLHttpRequest();
+	  // var xhttp = new XMLHttpRequest();
 
-	//     xhttp.onloadstart = function () {
-	//       var loadingnya = document.getElementById("loading-ajax");
-	//       loadingnya.style.display = "block";
-	//     };
+   //  xhttp.onloadstart = function () {
+      
+   //  };
 
-	//     xhttp.onreadystatechange = function () {
-	//       if (this.readyState == 4) {
-	//         var content = document.getElementById("body-content");
-	//         var loadingnya = document.getElementById("loading-ajax");
-
-	//         if (this.status == 200) {
-	//           content.innerHTML = xhttp.responseText;
-	//           loadingnya.id = "loading-ajax-end";
-	//           destroySlick();
-	//           initiateSlickforWrapper();
-	//           initbuttoninfo();
-	//           lazy();
-	//         } else if (this.status == 404) {
-	//           content.innerHTML =
-	//             "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Halaman yang anda cari tidak ditemukan :(</p>";
-	//           loadingnya.id = "loading-ajax-end";
-	//         } else {
-	//           content.innerHTML =
-	//             "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Ups.. Halaman yang anda inginkan tidak dapat diakses! :(</p>";
-	//           loadingnya.id = "loading-ajax-end";
-	//         }
-	//       }
-	//     };
-	//     xhttp.open("GET", "pages/" + page + ".php", true);
-	//     xhttp.send();
-	// }
+   //  xhttp.onreadystatechange = function () {
+   //    if (this.readyState === 4) {
+   //      var content = document.querySelector("#body-content");
+   //      if (this.status === 200) {
+   //        setTimeout(function () {
+            
+   //        }, 2000);
+   //        content.innerHTML = xhttp.responseText;
+          
+   //      } else if (this.status == 404) {
+   //        content.innerHTML =
+   //          "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Halaman yang anda cari tidak ditemukan :(</p>";
+   //      } else {
+   //        content.innerHTML =
+   //          "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Ups.. Halaman yang anda inginkan tidak dapat diakses! :(</p>";
+   //      }
+   //      var elmnt = document.getElementById("mywork");
+   //      elmnt.scrollIntoView(false);
+   //    }
+   //  };
+   //  xhttp.open("GET", "pages/" + page + ".php", true);
+   //  xhttp.send();
+  }
 </script>
 
 <div id="loading-ajax">
@@ -53,17 +100,17 @@
 		<span class="sr-only">Loading...</span>
 	</div>
 </div>
-<header style="position: absolute; z-index: 20;">
+<header style="position: relative; z-index: 20;">
 	<div class="HalamanPenuhMenu" id="nav">
 		<div class="nav">
 			<ul class="nav-mobile-li">
-				<li id="list-menu-mobile"><a href="#" data-text="Home">Home</a></li>
-				<li id="list-menu-mobile"><a href="#aboutme" onclick="aboutmeBtn();"  data-text="About Me">About Me</a></li>
-				<li id="list-menu-mobile"><a href="#mywork" onclick="projectBtn();" data-text="My Project">My Project</a></li>
-				<li id="list-menu-mobile"><a href="#myskill" onclick="myskillBtn();" data-text="Skills">Skills</a></li>
-				<li id="list-menu-mobile"><a href="#mycertificate" onclick="mycertificateBtn();" data-text="Self Archievement">Self Archievement</a></li>
-				<li id="list-menu-mobile"><a href="#endsection" onclick="endsectionBtn();" data-text="Contact">Contact</a></li>
-				<li><a href="#blog" onclick="blogBtn();" id="btnBlog" data-text="Blog">Blog</a></li>
+				<li id="list-menu-mobile"><a href="#" on:click={loadpage} data-text="nav-desktop" data-menu="Home">Home</a></li>
+				<li id="list-menu-mobile"><a href="#aboutme" on:click={loadpage} data-text="aboutme" data-menu="About Me">About Me</a></li>
+				<li id="list-menu-mobile"><a href="#mywork" on:click={loadpage} data-text="mywork" data-menu="My Project">My Project</a></li>
+				<li id="list-menu-mobile"><a href="#myskill" on:click={loadpage} data-text="myskill" data-menu="Skills">Skills</a></li>
+				<li id="list-menu-mobile"><a href="#mycertificate" on:click={loadpage} data-text="mycertificate" data-menu="Self Archievment">Self Archievement</a></li>
+				<li id="list-menu-mobile"><a href="#endsection" on:click={loadpage} data-text="endsection" data-menu="Contact">Contact</a></li>
+				<li><a href="#blog" on:click={loadpage} id="btnBlog" data-text="blog" data-menu="Blog">Blog</a></li>
 			</ul>
 		</div>
 		<a onclick="menuToggle()" class="close-navbar-btn"><img alt="close-button" src="./assets/images/close-white.svg" width="45" height="45"></a>
@@ -71,10 +118,10 @@
 	<div id="nav-desktop">
 		<a href="#"><img alt="logo-website" class="logo-image" src="./assets/images/logoanjaysmall.png" onclick="berandaBtn();"></a>
 		<ul class="nav-desktop-li">
-			<li><a href="#mywork" onclick="projectBtn();">Project</a></li>
-			<li><a href="#endsection" onclick="endsectionBtn();">Contact</a></li>
-			<li><a onclick="blogBtn();" id="btnBlog" href="#blog">Blog</a></li>
-			<li><a href="#aboutme" onclick="aboutmeBtn();" >About</a></li>
+			<li><a href="#mywork" on:click={loadpage} data-text="mywork">Project</a></li>
+			<li><a href="#endsection" on:click={loadpage} data-text="endsection">Contact</a></li>
+			<li><a href="#blog" on:click={loadpage} data-text="blog">Blog</a></li>
+			<li><a href="#aboutme" on:click={loadpage} data-text="aboutme">About</a></li>
 		</ul>
 		<div class="portofolio-button-container" id="cv-button-landing1">
 			<a href="cv.pdf"><span><i class="fas fa-file-alt" style="margin-right: 4px;"></i></span> Portofolio</a>
@@ -86,10 +133,12 @@
 </header>
 
 <main id="body-content">
-	{#if window.location.hash.substr(2) == ''}
-		<Landing/>
+	{#if pageposition === 'landing'}
+		<Landing on:loadportofolio={loadpagee}/>
+	{:else if pageposition === 'blog'}
+		<Blog/>
 	{:else}
-		<p>HAlooooo</p>
+		<Portofolio/>
 	{/if}
 </main>
 

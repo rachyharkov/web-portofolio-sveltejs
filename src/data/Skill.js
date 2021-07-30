@@ -1,3 +1,5 @@
+const anu = ['oi','udah','ga ada yg menarik disini','terus aja klik','hmmm','ey','oof','why?','udah lah...','ok','test','test 1','test 2','test 3','test 4','test 5','test 6','test 7','test 8','test 9','test 10','TEST']
+
 let tools = [
 	{
 		id: 1,
@@ -105,4 +107,4 @@ let skills = [
 	}
 ]
 
-export { skills, tools }
+export { skills, tools, anu }

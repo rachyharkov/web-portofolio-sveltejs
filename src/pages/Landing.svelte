@@ -1,8 +1,11 @@
 <script type="text/javascript">
+	import { createEventDispatcher } from 'svelte'
 
-	import { projectshowup } from './ProjectsShowcase.js'
-	import { archievments } from './Archievment.js'
-	import { skills, tools } from './Skill.js'
+	import { projectshowup } from '../data/ProjectsShowcase.js'
+	import { archievments } from '../data/Archievment.js'
+	import { skills, tools, anu } from '../data/Skill.js'
+
+	const dispatch = createEventDispatcher()
 
 	const lazy = function lazy() {
 	  document.addEventListener('lazyloaded', function (e)  {
@@ -14,12 +17,24 @@
 
 	lazy()
 
-	let backstory = '';
-	let showbackstory = false;
+	let backstory = ''
+	let count = 0
+	let showbackstory = false
 	function showbackstorydescription(e) {
 		console.log(e.target.innerText)
-		const backstorys = skills.find((a) => { if(a.name == e.target.innerText) return a })
-		backstory = backstorys.backstory
+		// const backstorys = skills.find((a) => { if(a.name == e.target.innerText) return a })
+		count += 1
+		backstory = anu[Math.floor(Math.random() * anu.length)]
+	}
+
+	const loadparticle = () => {
+		particlesJS.load('particles-js','assets/particles.json', function() {
+			console.log('callback  paritalclac loaded')
+		})
+	}
+
+	function loadp(e) {
+		dispatch('loadportofolio',e.target.getAttribute('data-text'))
 	}
 </script>
 
@@ -77,7 +92,7 @@
 			<img src="./assets/images/chevron-circle-right-solid.svg" width="120" style="margin: auto;" class="project-picture" alt="Lihat lebih banyak">
 			<div class="card-info">
 				<p style="margin-top: 15vh;">Ingin lihat lebih banyak project yang sudah saya buat?</p>
-				<a class="btn btn-light" onclick="portofolioBtn();" href="#portofolio" role="button"><i class="fas fa-fw fa-chevron-right"></i> Lihat lainnya</a>
+				<button class="btn btn-light" on:click={loadp} data-text="portofolio" role="button"><i class="fas fa-fw fa-chevron-right"></i> Lihat lainnya</button>
 				
 			</div>
 		</div>
@@ -113,12 +128,8 @@
 	<h6 style="margin-top: 20px; color: white; margin-bottom: 20px;"></h6>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm" style="
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-">
-				<p style="color: white;">Saya begitu senang teamwork, maka dari itu saya menggunakan tools berikut.</p>
+			<div class="col-sm skill-mobile">
+				<p style="color: white;">Saya begitu senang teamwork, selain memiliki sifat Visi yang sama, berpandangan positif, dan lain-lain, saya harus menguasai tools di bidang yang saya dalami.</p>
 			</div>
 			<div class="col-sm">
 				<div style="display: flex;flex-wrap: wrap;justify-content: center;">
@@ -132,16 +143,19 @@
 					{/each}
 				</div>
 			</div>
+			<div class="col-sm skill-desktop">
+				<p style="color: white;">Saya begitu senang teamwork, selain memiliki sifat Visi yang sama, berpandangan positif, dan lain-lain, saya harus menguasai tools di bidang yang saya dalami.</p>
+			</div>
 		</div>
 	</div>
 </div>
-<div id="particles-js" style="position: relative;">
+<div use:loadparticle id="particles-js" style="position: relative; height: 90vh;">
 	<h2 style="position: absolute;
-    top: 19vw;
-    font-size: 2vw;
-    color: #aeaeae;
-    width: 100%;
-    padding: 40px;">If you do what you always did, you will get what you always got.</h2>
+    top: 37%;
+    font-size: 24px;
+    color: rgb(174, 174, 174);
+    padding: 40px;
+    z-index: 0;">If you do what you always did, you will get what you always got.</h2>
 </div>
 <div class="mycertificate-wrapper" id="mycertificate">
 	<h1>Pencapaian</h1>

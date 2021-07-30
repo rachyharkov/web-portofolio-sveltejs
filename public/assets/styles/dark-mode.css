@@ -137,7 +137,7 @@ header
 
 .HalamanPenuhMenu .nav ul li a:before
 {
-	content: attr(data-text);
+	content: attr(data-menu);
 	position: absolute;
 	bottom: -100%;
 	left: 0;
@@ -481,13 +481,14 @@ main
 
 .card-box 
 {
+	transition: all 250ms ease-in-out;
 	overflow: hidden;
 	padding: 20px 0;
 	display: block;
 	width: 25%;
     margin: 4px 4px;
     height: auto;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	text-align: center;
 	position: relative;
 }
@@ -516,6 +517,11 @@ main
 	transition: all 250ms ease-in-out
 }
 
+.card-box:hover {
+	transform: scale(0.9);
+	transition: all 250ms ease-in-out;
+}
+
 .card-box:hover .title-skill
 {
 	opacity: 1;
@@ -524,6 +530,7 @@ main
 .card-box .title-skill p
 {
 	color: white;
+	font-size: 12px;
 	background-color: gray;
 	padding: 10px;
 }
@@ -690,7 +697,7 @@ main
 	text-align: center; 
 	padding-top: 250px;
 	transform: translateY(0px);
-	transition: all 300ms ease-in-out;
+	transition: all 400ms ease-in-out;
 	bottom: 0;
 }
 
@@ -703,8 +710,8 @@ main
 	width: 100%;
 	text-align: center; 
 	padding-top: 250px;
-	transform: translateY(-1200px);
-	display: none;
+	transform: translateY(-100%);
+	display: block;
 	transition: all 700ms ease-in-out;
 	top: 0;
 }
@@ -749,11 +756,17 @@ main
 	height: auto; 
 	width: auto;
 	position: relative;
-	border: 1px solid #e1e4e8;
+	border: 1px solid #3f3f3f;
 	border-radius: 6px;
 	justify-content: space-between;
 	display: flex;
 	flex-direction: column;
+}
+
+.portofoliocont
+{
+	padding: 50px 0px;
+	text-align: center;
 }
 
 .portofoliocont > .row > .middle {
@@ -780,6 +793,7 @@ main
 .portofoliocont .row .box-project .linktoproject .project-title h5
 {
 	font-size: 1rem;
+	color: white;
 }
 
 .box-project div
@@ -798,6 +812,7 @@ main
 }
 
 .portofolioinfowrapper {
+	background: white;
 	margin: 12px 0; 
 	border: 1px solid #e1e4e8;
 	border-radius: 6px;
@@ -872,8 +887,34 @@ main
 	margin-bottom: 10px;
 }
 
+.skill-desktop
+{
+	display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    display: unset;
+}
+
+.skill-mobile
+{
+	display: none !important;
+}
+
+.portofoliocont
+
 @media screen and (max-width: 760px)
 {
+	.skill-desktop
+	{
+	    display: none !important;
+	}
+	.skill-mobile 
+	{
+		display: flex !important;
+	    flex-direction: column;
+	    justify-content: center;
+	    display: unset;
+	}
 	.landing-page .welcome-message h1
 	{
 		font-size: 7vw;
