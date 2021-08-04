@@ -5,8 +5,6 @@
 	import { archievments } from '../data/Archievment.js'
 	import { skills, tools, anu } from '../data/Skill.js'
 
-	const dispatch = createEventDispatcher()
-
 	const lazy = function lazy() {
 	  document.addEventListener('lazyloaded', function (e)  {
 	    // e.target.parentNode.classList.add('image-loaded')
@@ -33,15 +31,26 @@
 		})
 	}
 
+	const dispatch = createEventDispatcher()
 	function loadp(e) {
 		dispatch('loadportofolio',e.target.getAttribute('data-text'))
 	}
 
-	window.$(window).on('scroll', function (e) {
-	   var top = window.$(window).scrollTop() + window.$(window).height(),
-	       isVisible = top > window.$('#mywork').offset().top;
+	function showModalfor(e)
+	{
+		let modalnya = e.target.getAttribute('data-nya')
+		let linknya = e.target.getAttribute('data-linknya')
+		let id = e.target.getAttribute('data-id')
+		const myModal = new bootstrap.Modal(document.getElementById(modalnya), {})
+		PDFObject.embed(linknya, '#pdfnyasi' + id)
+		myModal.show()
+	}
 
-	   window.$('.hand-gesture').toggleClass('animote', isVisible);
+	window.$(window).on('scroll', function (e) {
+	   var top = window.$(window).scrollTop() + window.$(window).height()
+	   var isVisible = top > window.$('#mywork').offset().top
+
+	   window.$('.hand-gesture').toggleClass('animote', isVisible)
 	});
 
 
@@ -169,7 +178,7 @@
 </div>
 <div class="mycertificate-wrapper" id="mycertificate">
 	<h1>Pencapaian</h1>
-	<h6>Tidak terlalu hebat, setidaknya saya pernah mencoba sedikit hal. Apapun besaran dan kecilnya suatu pengalaman, saya selalu bersyukur dan menghargainya.</h6>
+	<h6>Tidak terlalu hebat, setidaknya saya pernah mencoba sedikit hal. Apapun besaran dan kecilnya suatu pengalaman, saya selalu bersyukur dan menghargainya. Mulai dari kiri ke kanan mempresentasikan urutan perolehan dari waktu ke waktu</h6>
 	<div class="wrapper">
 		{#each archievments as arch}
 			<div class="card">
@@ -177,6 +186,7 @@
 				<div class="card-info">
 					<h5>{arch.title}</h5>
 					<p>{arch.description}</p>
+					<button class="btn btn-light" type="button" on:click={showModalfor} data-nya="modalFor{arch.id}" data-linknya="{arch.file}" data-id="{arch.id}">Lihat</button>
 				</div>
 			</div>
 		{/each}
@@ -202,3 +212,25 @@
 	</div>
 </div>
 
+{#each archievments as arch}
+<!-- Modal -->
+	<div class="modal fade" id="modalFor{arch.id}" tabindex="-1" aria-labelledby="modalFor{arch.id}Label" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalFor{arch.id}Label">{arch.title}</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <div id="pdfnyasi{arch.id}" style="height: 62vh;">
+
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+{/each}

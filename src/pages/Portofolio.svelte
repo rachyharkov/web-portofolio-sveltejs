@@ -22,13 +22,22 @@
         { name: 'project8', component: Project8 }
     ];
     
-    let project = projectinfo[0]
+    let project = projectinfo[0].component
     
     function linktoproject(e) {
-        const b = e.target.parentElement.parentElement.id
-        //console.log(projectinfo.findIndex(x => x.color === 'BlueThing'));
-        const index = projectinfo.findIndex(x => x.name === b)
-        project = projectinfo[index]
+        console.log('scrolled!')
+        document.getElementById('loadingproject').style.display = 'inline'
+        document.getElementById('contentinfoproject').style.display = 'none'
+        window.scrollTo(0, document.getElementById('loadingproject').offsetTop)
+        setTimeout(function() {
+
+            const b = e.target.parentElement.parentElement.id
+            //console.log(projectinfo.findIndex(x => x.color === 'BlueThing'));
+            const index = projectinfo.findIndex(x => x.name === b)
+            project = projectinfo[index]
+            document.getElementById('contentinfoproject').style.display = 'block'
+            document.getElementById('loadingproject').style.display = 'none'
+        },2000)
     }
 
 </script>
@@ -125,13 +134,13 @@
                     <img class="lazyload" src="./assets/images/project-list/web-promosi-indihome.png">
                 </div>
                 <div class="project-title">
-                    <h5 on:click={linktoproject}>Coming Soon...</h5>
+                    <h5 on:click={linktoproject} style="cursor: pointer;">Coming Soon...</h5>
                 </div>
             </a>
         </div>
     </div>
     <div class="container-fluid" id="wreper" style="padding: 0;">
-        <img id="loadingproject" src="../public/assets/images/loadingproject.svg" style="padding: 10vh; display: none;">
+        <img id="loadingproject" src="./assets/images/loadingproject.svg" style="padding: 10vh; display: none; filter: invert(1);">
         <div id="contentinfoproject" style="display:block;">
             <svelte:component this={project.component}/>
         </div>

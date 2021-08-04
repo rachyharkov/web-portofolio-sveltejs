@@ -93,7 +93,7 @@
 
 <div id="loading-ajax">
 	<div class="spinner-border" style="width: 3rem; height: 3rem; color: white;" role="status">
-		<span class="sr-only">Loading...</span>
+		<span class="sr-only"></span>
 	</div>
 </div>
 <header style="position: relative; z-index: 20;">

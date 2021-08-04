@@ -561,7 +561,6 @@ main
 .mycertificate-wrapper h6
 { 
 	margin: 70px 20px;
-	height: 50px;
 	color: white; 
 }
 
@@ -795,6 +794,7 @@ main
 {
 	font-size: 1rem;
 	color: white;
+	cursor: pointer;
 }
 
 .box-project div
@@ -918,7 +918,7 @@ main
 	.animote 
 	{
 		animation: anim 2.5s ease-in-out;
-		animation-iteration-count: 3;
+		animation-iteration-count: 2;
 	}
 
 	.hand-gesture 
