@@ -7,12 +7,12 @@
 	import Portofolio from './pages/Portofolio.svelte'
 	import Blog from './pages/Blog.svelte'
 
-
-
 	setTimeout(function() {
 		const content = document.getElementById("body-content");
 	    const loadingnya = document.getElementById("loading-ajax");
 	    loadingnya.id = "loading-ajax-end";
+      destroySlick();
+			initiateSlickforWrapper();
 	}, 3000)
 
 	let pageposition = 'landing';
@@ -34,10 +34,12 @@
 				load('landing')
 				pageposition = 'landing'
 				setTimeout(()=> {
-					document.getElementById(whichpage).scrollIntoView()
+					window.scrollTo(0, document.getElementById(whichpage).offsetTop)
+					// document.getElementById(whichpage).scrollIntoView()
 				},3000)
 			} else {
-				document.getElementById(whichpage).scrollIntoView()
+				window.scrollTo(0, document.getElementById(whichpage).offsetTop)
+				// document.getElementById(whichpage).scrollIntoView()
 			}
 		}
 
@@ -61,38 +63,32 @@
       	destroySlick();
       	initiateSlickforWrapper();
       }
-    }, 3000)
-
-
-	  // var xhttp = new XMLHttpRequest();
-
-   //  xhttp.onloadstart = function () {
-      
-   //  };
-
-   //  xhttp.onreadystatechange = function () {
-   //    if (this.readyState === 4) {
-   //      var content = document.querySelector("#body-content");
-   //      if (this.status === 200) {
-   //        setTimeout(function () {
-            
-   //        }, 2000);
-   //        content.innerHTML = xhttp.responseText;
-          
-   //      } else if (this.status == 404) {
-   //        content.innerHTML =
-   //          "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Halaman yang anda cari tidak ditemukan :(</p>";
-   //      } else {
-   //        content.innerHTML =
-   //          "<p style='height: 100%; width: 100%; text-align: center; padding-top: 250px;'>Ups.. Halaman yang anda inginkan tidak dapat diakses! :(</p>";
-   //      }
-   //      var elmnt = document.getElementById("mywork");
-   //      elmnt.scrollIntoView(false);
-   //    }
-   //  };
-   //  xhttp.open("GET", "pages/" + page + ".php", true);
-   //  xhttp.send();
+    }, 1500)
   }
+
+  window.$(document).scroll(function () {
+  	if (pageposition === 'landing') {
+  		window.$("#btn-vert-nav").css('display','flex')
+  		var y = window.$(this).scrollTop()
+	    if (y > 100) {
+	      window.$("#fixed-btn-navbar").addClass("active")
+	      window.$("#btn-vert-nav").addClass("active")
+	    } else {
+	      window.$("#fixed-btn-navbar").removeClass("active")
+	      window.$("#btn-vert-nav").removeClass("active")
+	    }
+  	} else {
+  		window.$("#btn-vert-nav").css('display','none')
+  	}
+
+    var t = window.$(this).scrollTop()
+    if (t > 500) {
+      window.$(".btn-portofolio-dl").fadeIn()
+    } else {
+      window.$(".btn-portofolio-dl").fadeOut()
+    }
+  });
+
 </script>
 
 <div id="loading-ajax">
@@ -116,7 +112,7 @@
 		<a onclick="menuToggle()" class="close-navbar-btn"><img alt="close-button" src="./assets/images/close-white.svg" width="45" height="45"></a>
 	</div>
 	<div id="nav-desktop">
-		<a href="#"><img alt="logo-website" class="logo-image" src="./assets/images/logoanjaysmall.png" onclick="berandaBtn();"></a>
+		<a href="#"><img alt="logo-website" class="logo-image" src="./assets/images/logoanjaysmall.png" on:click={loadpage} data-text="nav-desktop"></a>
 		<ul class="nav-desktop-li">
 			<li><a href="#mywork" on:click={loadpage} data-text="mywork">Project</a></li>
 			<li><a href="#endsection" on:click={loadpage} data-text="endsection">Contact</a></li>

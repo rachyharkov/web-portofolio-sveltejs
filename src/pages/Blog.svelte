@@ -1,6 +1,6 @@
 <script>
 const fetchArticles = (async () => {
-	const response = await fetch('http://localhost/my-svelte-project/public/pages/blog.php')
+	const response = await fetch('https://rach-nh.xyz/api/articles.php')
 	return await response.json()
 })()
 </script>

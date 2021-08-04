@@ -36,6 +36,15 @@
 	function loadp(e) {
 		dispatch('loadportofolio',e.target.getAttribute('data-text'))
 	}
+
+	window.$(window).on('scroll', function (e) {
+	   var top = window.$(window).scrollTop() + window.$(window).height(),
+	       isVisible = top > window.$('#mywork').offset().top;
+
+	   window.$('.hand-gesture').toggleClass('animote', isVisible);
+	});
+
+
 </script>
 
 <div class="landing-page">
@@ -72,7 +81,8 @@
 	</div>
 </div>				
 <div class="mywork-wrapper" id="mywork">
-	<h1>My Work</h1><span class="view-allwork-href"><a onclick="portofolioBtn();" id="linktoportofolio" href="#portofolio" style="color: gainsboro; text-decoration: none;"><i class="fas fa-fw fa-chevron-right"></i> View all work</a></span>
+	<i class="fas fa-hand-point-up hand-gesture"></i>
+	<h1>My Work</h1><span class="view-allwork-href"><button on:click={loadp} data-text="portofolio" id="linktoportofolio" style="color: gainsboro; text-decoration: none; border: none; background-color: transparent;"><i class="fas fa-fw fa-chevron-right"></i> View all work</button></span>
 	<div class="wrapper">
 		{#each projectshowup as project}
 		<div class="card">
